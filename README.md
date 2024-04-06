@@ -1,4 +1,4 @@
-<img src="media/snorlax.gif">
+<img src="media/snorlax.gif" width="20%">
 
 ## Snorlax.ts
 A **simple** and **powerful** middleware for [**Deno**](https://deno.com/).
