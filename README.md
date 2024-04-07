@@ -1,7 +1,12 @@
 <img src="media/snorlax.gif" width="20%">
 
 ## Snorlax.ts
-A **simple** and **powerful** middleware for [**Deno**](https://deno.com/).
+A **simple**, **lightweight** and **powerful** middleware for [**Deno**](https://deno.com/).\
+\
+The principles of this library is to:
+- be simple and easy to use;
+- be fast;
+- be straight to the point; 
 
 ## Example
 ```ts
@@ -18,10 +23,10 @@ const router  : Router  = new Router ();
 manager.use(router);
 
 // https://localhost:8080/
-router.on('/', (context: Context) =>
+router.get('/', async (context: Context) =>
 {
-    context.send("Hello, World!"); // Send a plain-text 'Hello, World!' with
-                                   // status code 200 (OK) to the client.
+    await context.respond("Hello, World!"); // Send a plain-text 'Hello, World!' with
+                                            // status code 200 (OK) to the client.
 });
 
 // We've setup everything we needed, start listening to port 8080!
