@@ -97,7 +97,7 @@ export class Manager implements IManager
         const context: Context = new Context(connection, request);
 
         // Handle the context.
-        this.handleContext(context);
+        await this.handleContext(context);
 
         // Close the connection.
         connection.close();

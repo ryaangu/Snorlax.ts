@@ -108,13 +108,13 @@ export class Response
 {
     private head    : IResponseHead;
     private headers : Array<IHeader>;  
-    private body_   : string;
+    private body_   : Uint8Array;
 
     constructor()
     {
         this.head    = { version: Version.Default, status: StatusCode.OK };
         this.headers = new Array<IHeader>();
-        this.body_   = "";
+        this.body_   = new Uint8Array();
     }
 
     /**
@@ -149,7 +149,7 @@ export class Response
     /**
      * Set body.
      */
-    body(content: string): Response
+    body(content: Uint8Array): Response
     {
         this.body_ = content;
         return this;
@@ -172,12 +172,17 @@ export class Response
 
         text += "\r\n";
 
-        // Encode the body.
-        text += this.body_;
+        // Encode.
+        const encodedText: Uint8Array = new TextEncoder().encode(text);
+
+        // Encode body.
+        const result: Uint8Array = new Uint8Array(encodedText.length + this.body_.length);
+        result.set(encodedText);
+        result.set(this.body_, encodedText.length);
 
         return {
             text  : text,
-            bytes : new TextEncoder().encode(text),
+            bytes : result,
         };
     }
 }

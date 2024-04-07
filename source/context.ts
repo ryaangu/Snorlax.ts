@@ -35,6 +35,6 @@ export class Context implements IContext
 
     respond(message: string): Response
     {
-        return new Response().header("Content-Type", "text/plain").body(message);
+        return new Response().header("Content-Type", "text/plain").body(new TextEncoder().encode(message));
     }
 }
