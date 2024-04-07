@@ -1,7 +1,7 @@
-import { Response } from "../source/http.ts";
-import { Context  } from "../source/context.ts";
-import { Manager  } from "../source/manager.ts";
-import { Router   } from "../source/router.ts";
+import { Response } from "../mod.ts";
+import { Context  } from "../mod.ts";
+import { Manager  } from "../mod.ts";
+import { Router   } from "../mod.ts";
 
 const manager : Manager = new Manager();
 const  router : Router  = new Router ();
