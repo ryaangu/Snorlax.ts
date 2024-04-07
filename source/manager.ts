@@ -1,5 +1,6 @@
 import { IRequest, decode } from "./http.ts";
 import { Context          } from "./context.ts";
+import { Router           } from "./router.ts";
 
 interface IOptions
 {
@@ -13,6 +14,17 @@ interface IManager
      * The listener of the manager.
      */
     listener?: Deno.Listener;
+
+    /**
+     * All the routers the manager has.
+     */
+    routes: Array<Router>;
+
+    /**
+     * Use a specific router.
+     * @param router The router to use.
+     */
+    use(router: Router): void;
 
     /**
      * Starts listening to the specified options.
@@ -30,11 +42,35 @@ interface IManager
  */
 export class Manager implements IManager
 {
-    listener?: Deno.Listener;
+    listener ?: Deno.Listener;
+    routes    : Array<Router>;
+
+    constructor()
+    {
+        this.routes = new Array<Router>();
+    }
+
+    use(router: Router): void
+    {
+        // Add the router to routes.
+        this.routes?.push(router);
+    }
 
     private async handleContext(context: Context): Promise<void>
     {
-        await console.log(context.request.head);
+        // Get URI from context.
+        const uri: string = context.request.head.uri;
+
+        // Try to handle that URI.
+        let router: Router;
+        
+        for (router of this.routes)
+        {
+            if (await router.handle(context.request.head.method, uri, context))
+                return;
+        }
+
+        console.log(`Failed to handle route: ${context.request.head.uri}`);
     }
 
     private async handleConnection(connection: Deno.Conn): Promise<void>
