@@ -6,9 +6,9 @@ import { Router   } from "../source/router.ts";
 const manager : Manager = new Manager();
 const  router : Router  = new Router ();
 
-router.get('/', (_context: Context) =>
+router.get('/', (context: Context) =>
 {
-    return new Response().header("Content-Type", "text/html").body("<h1>Hello!</h1>");
+    return context.respond("Hello, this is the main path.");
 });
 
 router.get('/user', (_context: Context) =>

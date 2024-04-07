@@ -1,4 +1,4 @@
-import { IRequest } from "./http.ts";
+import { IRequest, Response } from "./http.ts";
 
 interface IContext
 {
@@ -11,6 +11,12 @@ interface IContext
      * The request we've received.
      */
     request    : IRequest;
+
+    /**
+     * Respond to the request with a plain-text message.
+     * @param message The message to respond with.
+     */
+    respond(message: string): Response;
 }
 
 /**
@@ -25,5 +31,10 @@ export class Context implements IContext
     {
         this.connection = connection;
         this.request    = request;
+    }
+
+    respond(message: string): Response
+    {
+        return new Response().header("Content-Type", "text/plain").body(message);
     }
 }
