@@ -25,8 +25,8 @@ manager.use(router);
 // https://localhost:8080/
 router.get('/', async (context: Context) =>
 {
-    await context.respond("Hello, World!"); // Send a plain-text 'Hello, World!' with
-                                            // status code 200 (OK) to the client.
+    return await context.respond("Hello, World!"); // Send a plain-text 'Hello, World!' with
+                                                   // status code 200 (OK) to the client.
 });
 
 // We've setup everything we needed, start listening to port 8080!
